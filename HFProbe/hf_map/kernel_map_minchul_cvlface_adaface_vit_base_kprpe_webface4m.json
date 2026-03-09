@@ -1,0 +1,1 @@
+{"forward_gpu": {"func_name": "rpe_index_forward_gpu", "file_path": "/data/_models/minchul_cvlface_adaface_vit_base_kprpe_webface4m/models/vit_kprpe/RPE/rpe_ops/rpe_index_cuda.cu"}, "backward_gpu": {"func_name": "rpe_index_backward_gpu", "file_path": "/data/_models/minchul_cvlface_adaface_vit_base_kprpe_webface4m/models/vit_kprpe/RPE/rpe_ops/rpe_index_cuda.cu"}}
