@@ -416,9 +416,6 @@ KleeHandler::KleeHandler(int argc, char **argv, const std::string functionName)
       ds << i;
       // SmallString is always up-to-date, no need to flush. See Support/raw_ostream.h
 
-      // llvm::outs() << "d: " << d.c_str() << "\n";
-      // llvm::outs() << "m_outputDirectory: " << m_outputDirectory.c_str() << "\n";
-
       // create directory and try to link klee-last
       if (mkdir(d.c_str(), 0775) == 0) {
         m_outputDirectory = d;
@@ -1286,7 +1283,6 @@ int main(int argc, char **argv, char **envp) {
         if (node->getNumOperands() > 1) {
           if (const llvm::MDString *tag = llvm::dyn_cast<llvm::MDString>(node->getOperand(1))) {
             if (tag->getString() == "kernel") {
-              // llvm::outs() << "Found 'kernel' metadata!\n";
 
               if (const llvm::Metadata *md = node->getOperand(0).get()) {
                 if (const llvm::ValueAsMetadata *valueMeta = llvm::dyn_cast<llvm::ValueAsMetadata>(md)) {

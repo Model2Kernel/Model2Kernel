@@ -635,10 +635,6 @@ MetaSMTBuilder<SolverContext>::constructActual(ref<Expr> e, int *width_out) {
 
   ++stats::queryConstructs;
 
-  //     llvm::errs() << "Constructing expression ";
-  //     ExprPPrinter::printSingleExpr(llvm::errs(), e);
-  //     llvm::errs() << "\n";
-
   switch (e->getKind()) {
 
   case Expr::Constant: {

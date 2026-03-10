@@ -22,6 +22,3 @@ llvm_map_components_to_libnames(llvm_libs
 )
 
 target_link_libraries(Model2Kernel ${llvm_libs})
-
-# Include KLEE as a subproject
-add_subdirectory(klee)

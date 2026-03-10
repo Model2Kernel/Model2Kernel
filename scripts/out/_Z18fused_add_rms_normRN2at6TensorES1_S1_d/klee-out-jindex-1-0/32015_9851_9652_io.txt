@@ -1,0 +1,389 @@
+; start Z3 query
+; Emited by klee::Z3SolverImpl::getConstraintLog()
+(set-info :status unknown)
+(declare-fun |_arg_0.size[0]| () Int)
+(declare-fun |_arg_1.size[0]| () Int)
+(declare-fun batch_size () Int)
+(declare-fun seq_len () Int)
+(declare-fun blockIdx.x0 () Int)
+(declare-fun blockIdx.y0 () Int)
+(declare-fun blockIdx.z0 () Int)
+(declare-fun threadIdx.y0 () Int)
+(declare-fun threadIdx.z0 () Int)
+(declare-fun loop_index_9 () Int)
+(declare-fun loop_index_10 () Int)
+(declare-fun _arg_1_0 () (Array Int Int))
+(declare-fun loop_index_10_out () Int)
+(declare-fun loop_index_11 () Int)
+(declare-fun loop_index_11_out () Int)
+(declare-fun loop_index_9_out () Int)
+(declare-fun threadIdx.x0 () Int)
+(declare-fun loop_index_8 () Int)
+(assert
+ (<= 0 |_arg_0.size[0]|))
+(assert
+ (<= |_arg_0.size[0]| 2147483647))
+(assert
+ (<= 1 |_arg_0.size[0]|))
+(assert
+ (let ((?x13 (* 7168 |_arg_0.size[0]|)))
+ (<= ?x13 9223372036854775807)))
+(assert
+ (<= 0 |_arg_1.size[0]|))
+(assert
+ (<= |_arg_1.size[0]| 2147483647))
+(assert
+ (<= 1 |_arg_1.size[0]|))
+(assert
+ (let ((?x22 (* 7168 |_arg_1.size[0]|)))
+ (<= ?x22 9223372036854775807)))
+(assert
+ (<= 0 batch_size))
+(assert
+ (<= batch_size 2147483647))
+(assert
+ (<= 1 batch_size))
+(assert
+ (<= batch_size 1000))
+(assert
+ (<= 0 seq_len))
+(assert
+ (<= seq_len 2147483647))
+(assert
+ (<= 1 seq_len))
+(assert
+ (<= seq_len 2000000))
+(assert
+ (let ((?x37 (* batch_size seq_len)))
+ (<= ?x37 9000000)))
+(assert
+ (let ((?x37 (* batch_size seq_len)))
+ (= |_arg_0.size[0]| ?x37)))
+(assert
+ (let ((?x37 (* batch_size seq_len)))
+ (= |_arg_1.size[0]| ?x37)))
+(assert
+ (let ((?x13 (* 7168 |_arg_0.size[0]|)))
+ (let ((?x44 (div ?x13 7168)))
+ (<= 0 ?x44))))
+(assert
+ (let ((?x13 (* 7168 |_arg_0.size[0]|)))
+ (let ((?x44 (div ?x13 7168)))
+ (<= ?x44 2147483647))))
+(assert
+ (let ((?x13 (* 7168 |_arg_0.size[0]|)))
+ (let ((?x44 (div ?x13 7168)))
+ (let (($x48 (< ?x44 256)))
+ (let ((?x50 (ite $x48 1024 256)))
+ (<= 0 ?x50))))))
+(assert
+ (let ((?x13 (* 7168 |_arg_0.size[0]|)))
+ (let ((?x44 (div ?x13 7168)))
+ (let (($x48 (< ?x44 256)))
+ (let ((?x50 (ite $x48 1024 256)))
+ (<= ?x50 1024))))))
+(assert
+ (<= 0 blockIdx.x0))
+(assert
+ (let ((?x13 (* 7168 |_arg_0.size[0]|)))
+ (let ((?x44 (div ?x13 7168)))
+ (< blockIdx.x0 ?x44))))
+(assert
+ (<= 0 blockIdx.y0))
+(assert
+ (< blockIdx.y0 1))
+(assert
+ (<= 0 blockIdx.z0))
+(assert
+ (< blockIdx.z0 1))
+(assert
+ (let ((?x13 (* 7168 |_arg_0.size[0]|)))
+ (let ((?x44 (div ?x13 7168)))
+ (let (($x48 (< ?x44 256)))
+ (let ((?x50 (ite $x48 1024 256)))
+ (< 0 ?x50))))))
+(assert
+ (<= 0 threadIdx.y0))
+(assert
+ (< threadIdx.y0 1))
+(assert
+ (<= 0 threadIdx.z0))
+(assert
+ (< threadIdx.z0 1))
+(assert
+ (<= (- 2147483648) loop_index_9))
+(assert
+ (<= loop_index_9 2147483647))
+(assert
+ (<= 0 loop_index_9))
+(assert
+ (< loop_index_9 896))
+(assert
+ (let ((?x13 (* 7168 |_arg_0.size[0]|)))
+ (let ((?x44 (div ?x13 7168)))
+ (let (($x48 (< ?x44 256)))
+ (let ((?x50 (ite $x48 1024 256)))
+ (let ((?x76 (- loop_index_9 0)))
+ (let ((?x77 (rem ?x76 ?x50)))
+ (= 0 ?x77))))))))
+(assert
+ (let ((?x79 (* 896 blockIdx.x0)))
+ (<= ?x79 2147483647)))
+(assert
+ (let ((?x79 (* 896 blockIdx.x0)))
+ (let ((?x83 (+ ?x79 loop_index_9)))
+ (<= ?x83 2147483647))))
+(assert
+ (<= (- 2147483648) loop_index_10))
+(assert
+ (<= loop_index_10 2147483647))
+(assert
+ (<= 0 loop_index_10))
+(assert
+ (< loop_index_10 8))
+(assert
+ (let ((?x92 (- loop_index_10 0)))
+ (let ((?x94 (rem ?x92 2)))
+ (= 0 ?x94))))
+(assert
+ (let ((?x101 (* 2 loop_index_10)))
+ (let ((?x79 (* 896 blockIdx.x0)))
+ (let ((?x83 (+ ?x79 loop_index_9)))
+ (let ((?x98 (* 16 ?x83)))
+ (let ((?x104 (+ ?x98 ?x101)))
+ (let ((?x106 (+ 140019993657344 ?x104)))
+ (let ((?x108 (- ?x106 140019993657344)))
+ (let ((?x111 (select _arg_1_0 (div ?x108 2))))
+ (<= ?x111 32767))))))))))
+(assert
+ (let ((?x101 (* 2 loop_index_10)))
+ (let ((?x79 (* 896 blockIdx.x0)))
+ (let ((?x83 (+ ?x79 loop_index_9)))
+ (let ((?x98 (* 16 ?x83)))
+ (let ((?x104 (+ ?x98 ?x101)))
+ (let ((?x106 (+ 140019993657344 ?x104)))
+ (let ((?x108 (- ?x106 140019993657344)))
+ (let ((?x111 (select _arg_1_0 (div ?x108 2))))
+ (<= (- 32768) ?x111))))))))))
+(assert
+ (let ((?x117 (+ 1 loop_index_10)))
+ (let ((?x118 (* 2 ?x117)))
+ (let ((?x79 (* 896 blockIdx.x0)))
+ (let ((?x83 (+ ?x79 loop_index_9)))
+ (let ((?x98 (* 16 ?x83)))
+ (let ((?x121 (+ ?x98 ?x118)))
+ (let ((?x123 (+ 140019993657344 ?x121)))
+ (let ((?x125 (- ?x123 140019993657344)))
+ (let ((?x127 (select _arg_1_0 (div ?x125 2))))
+ (<= ?x127 32767)))))))))))
+(assert
+ (let ((?x117 (+ 1 loop_index_10)))
+ (let ((?x118 (* 2 ?x117)))
+ (let ((?x79 (* 896 blockIdx.x0)))
+ (let ((?x83 (+ ?x79 loop_index_9)))
+ (let ((?x98 (* 16 ?x83)))
+ (let ((?x121 (+ ?x98 ?x118)))
+ (let ((?x123 (+ 140019993657344 ?x121)))
+ (let ((?x125 (- ?x123 140019993657344)))
+ (let ((?x127 (select _arg_1_0 (div ?x125 2))))
+ (<= (- 32768) ?x127)))))))))))
+(assert
+ (<= (- 2147483648) loop_index_10_out))
+(assert
+ (<= loop_index_10_out 2147483647))
+(assert
+ (let (($x134 (< loop_index_10_out 8)))
+ (= false $x134)))
+(assert
+ (<= (- 2147483648) loop_index_11))
+(assert
+ (<= loop_index_11 2147483647))
+(assert
+ (<= 0 loop_index_11))
+(assert
+ (< loop_index_11 8))
+(assert
+ (let ((?x141 (- loop_index_11 0)))
+ (let ((?x142 (rem ?x141 2)))
+ (= 0 ?x142))))
+(assert
+ (<= (- 2147483648) loop_index_11_out))
+(assert
+ (<= loop_index_11_out 2147483647))
+(assert
+ (let (($x147 (< loop_index_11_out 8)))
+ (= false $x147)))
+(assert
+ (<= (- 2147483648) loop_index_9_out))
+(assert
+ (<= loop_index_9_out 2147483647))
+(assert
+ (let (($x152 (< loop_index_9_out 896)))
+ (= false $x152)))
+(assert
+ (let ((?x13 (* 7168 |_arg_0.size[0]|)))
+ (let ((?x44 (div ?x13 7168)))
+ (let (($x48 (< ?x44 256)))
+ (let ((?x50 (ite $x48 1024 256)))
+ (let (($x154 (<= 1024 ?x50)))
+ (= false $x154)))))))
+(assert
+ (= 0 threadIdx.x0))
+(assert
+ (<= (- 2147483648) loop_index_8))
+(assert
+ (<= loop_index_8 2147483647))
+(assert
+ (<= 0 loop_index_8))
+(assert
+ (< loop_index_8 896))
+(assert
+ (let ((?x13 (* 7168 |_arg_0.size[0]|)))
+ (let ((?x44 (div ?x13 7168)))
+ (let (($x48 (< ?x44 256)))
+ (let ((?x50 (ite $x48 1024 256)))
+ (let ((?x163 (- loop_index_8 0)))
+ (let ((?x164 (rem ?x163 ?x50)))
+ (= 0 ?x164))))))))
+(assert
+ (let ((?x79 (* 896 blockIdx.x0)))
+ (let ((?x166 (+ ?x79 loop_index_8)))
+ (let (($x168 (<= ?x166 2147483647)))
+ (= false $x168)))))
+(assert
+ (let ((?x101 (* 2 loop_index_10)))
+ (let ((?x79 (* 896 blockIdx.x0)))
+ (let ((?x83 (+ ?x79 loop_index_9)))
+ (let ((?x98 (* 16 ?x83)))
+ (let ((?x104 (+ ?x98 ?x101)))
+ (let ((?x106 (+ 140019993657344 ?x104)))
+ (let ((?x108 (- ?x106 140019993657344)))
+ (let ((?x111 (select _arg_1_0 (div ?x108 2))))
+ (>= ?x111 (- 32768)))))))))))
+(assert
+ (let ((?x101 (* 2 loop_index_10)))
+ (let ((?x79 (* 896 blockIdx.x0)))
+ (let ((?x83 (+ ?x79 loop_index_9)))
+ (let ((?x98 (* 16 ?x83)))
+ (let ((?x104 (+ ?x98 ?x101)))
+ (let ((?x106 (+ 140019993657344 ?x104)))
+ (let ((?x108 (- ?x106 140019993657344)))
+ (let ((?x111 (select _arg_1_0 (div ?x108 2))))
+ (<= ?x111 32767))))))))))
+(assert
+ (let ((?x117 (+ 1 loop_index_10)))
+ (let ((?x118 (* 2 ?x117)))
+ (let ((?x79 (* 896 blockIdx.x0)))
+ (let ((?x83 (+ ?x79 loop_index_9)))
+ (let ((?x98 (* 16 ?x83)))
+ (let ((?x121 (+ ?x98 ?x118)))
+ (let ((?x123 (+ 140019993657344 ?x121)))
+ (let ((?x125 (- ?x123 140019993657344)))
+ (let ((?x127 (select _arg_1_0 (div ?x125 2))))
+ (>= ?x127 (- 32768))))))))))))
+(assert
+ (let ((?x117 (+ 1 loop_index_10)))
+ (let ((?x118 (* 2 ?x117)))
+ (let ((?x79 (* 896 blockIdx.x0)))
+ (let ((?x83 (+ ?x79 loop_index_9)))
+ (let ((?x98 (* 16 ?x83)))
+ (let ((?x121 (+ ?x98 ?x118)))
+ (let ((?x123 (+ 140019993657344 ?x121)))
+ (let ((?x125 (- ?x123 140019993657344)))
+ (let ((?x127 (select _arg_1_0 (div ?x125 2))))
+ (<= ?x127 32767)))))))))))
+(assert
+ (let ((?x79 (* 896 blockIdx.x0)))
+ (let ((?x83 (+ ?x79 loop_index_9)))
+ (<= ?x83 9223372036854775807))))
+(assert
+ (let ((?x101 (* 2 loop_index_10)))
+ (let ((?x79 (* 896 blockIdx.x0)))
+ (let ((?x83 (+ ?x79 loop_index_9)))
+ (let ((?x98 (* 16 ?x83)))
+ (let ((?x104 (+ ?x98 ?x101)))
+ (<= ?x104 9223372036854775807)))))))
+(assert
+ (let ((?x101 (* 2 loop_index_10)))
+ (let ((?x79 (* 896 blockIdx.x0)))
+ (let ((?x83 (+ ?x79 loop_index_9)))
+ (let ((?x98 (* 16 ?x83)))
+ (let ((?x104 (+ ?x98 ?x101)))
+ (let ((?x106 (+ 140019993657344 ?x104)))
+ (<= ?x106 9223372036854775807))))))))
+(assert
+ (let ((?x117 (+ 1 loop_index_10)))
+ (let ((?x118 (* 2 ?x117)))
+ (let ((?x79 (* 896 blockIdx.x0)))
+ (let ((?x83 (+ ?x79 loop_index_9)))
+ (let ((?x98 (* 16 ?x83)))
+ (let ((?x121 (+ ?x98 ?x118)))
+ (<= ?x121 9223372036854775807))))))))
+(assert
+ (let ((?x117 (+ 1 loop_index_10)))
+ (let ((?x118 (* 2 ?x117)))
+ (let ((?x79 (* 896 blockIdx.x0)))
+ (let ((?x83 (+ ?x79 loop_index_9)))
+ (let ((?x98 (* 16 ?x83)))
+ (let ((?x121 (+ ?x98 ?x118)))
+ (let ((?x123 (+ 140019993657344 ?x121)))
+ (<= ?x123 9223372036854775807)))))))))
+(assert
+ (let ((?x79 (* 896 blockIdx.x0)))
+ (let ((?x166 (+ ?x79 loop_index_8)))
+ (<= ?x166 9223372036854775807))))
+(assert
+ (let ((?x13 (* 7168 |_arg_0.size[0]|)))
+ (>= ?x13 (- 9223372036854775808))))
+(assert
+ (let ((?x13 (* 7168 |_arg_0.size[0]|)))
+ (<= ?x13 9223372036854775807)))
+(assert
+ (let ((?x22 (* 7168 |_arg_1.size[0]|)))
+ (>= ?x22 (- 9223372036854775808))))
+(assert
+ (let ((?x22 (* 7168 |_arg_1.size[0]|)))
+ (<= ?x22 9223372036854775807)))
+(assert
+ (let ((?x37 (* batch_size seq_len)))
+ (>= ?x37 (- 9223372036854775808))))
+(assert
+ (let ((?x37 (* batch_size seq_len)))
+ (<= ?x37 9223372036854775807)))
+(assert
+ (let ((?x79 (* 896 blockIdx.x0)))
+ (>= ?x79 (- 9223372036854775808))))
+(assert
+ (let ((?x79 (* 896 blockIdx.x0)))
+ (<= ?x79 9223372036854775807)))
+(assert
+ (let ((?x79 (* 896 blockIdx.x0)))
+ (let ((?x83 (+ ?x79 loop_index_9)))
+ (let ((?x98 (* 16 ?x83)))
+ (>= ?x98 (- 9223372036854775808))))))
+(assert
+ (let ((?x79 (* 896 blockIdx.x0)))
+ (let ((?x83 (+ ?x79 loop_index_9)))
+ (let ((?x98 (* 16 ?x83)))
+ (<= ?x98 9223372036854775807)))))
+(assert
+ (let ((?x101 (* 2 loop_index_10)))
+ (>= ?x101 (- 9223372036854775808))))
+(assert
+ (let ((?x101 (* 2 loop_index_10)))
+ (<= ?x101 9223372036854775807)))
+(assert
+ (let ((?x117 (+ 1 loop_index_10)))
+ (let ((?x118 (* 2 ?x117)))
+ (>= ?x118 (- 9223372036854775808)))))
+(assert
+ (let ((?x117 (+ 1 loop_index_10)))
+ (let ((?x118 (* 2 ?x117)))
+ (<= ?x118 9223372036854775807))))
+(assert
+ (not false))
+(check-sat)
+(get-model)
+(reset)
+; end Z3 query
+

@@ -33,7 +33,6 @@ ref<Expr> ExprVisitor::visit(const ref<Expr> &e) {
       return it->second;
     } else {
       ref<Expr> res = visitActual(e);
-      // llvm::outs() << e << " res " << res << "\n";
       visited.insert(std::make_pair(e, res));
       return res;
     }
@@ -105,7 +104,6 @@ ref<Expr> ExprVisitor::visitActual(const ref<Expr> &e) {
       for (unsigned i=0; i<count; i++) {
         ref<Expr> kid = ep.getKid(i);
         kids[i] = visit(kid);
-        // llvm::outs() << e << " i " << i << " kid " << kid << " kids[i] " << kids[i] << "\n";
         if (kids[i] != kid)
           rebuild = true;
       }
@@ -114,13 +112,11 @@ ref<Expr> ExprVisitor::visitActual(const ref<Expr> &e) {
         if (recursive)
           e = visit(e);
       }
-      // llvm::outs() << "after rebuild " << e << "\n";
       if (!isa<ConstantExpr>(e)) {
         res = visitExprPost(*e.get());
         if (res.kind==Action::ChangeTo)
           e = res.argument;
       }
-      // llvm::outs() <<"return " << e << "\n";
       return e;
     }
     case Action::SkipChildren:

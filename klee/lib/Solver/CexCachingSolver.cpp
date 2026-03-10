@@ -149,19 +149,6 @@ bool CexCachingSolver::searchForAssignment(KeyType &key, Assignment *&result) {
       result = *lookup;
       return true;
     }
-
-    // llvm::outs() << "iterate table\n";
-    // // Otherwise, iterate through the set of current assignments to see if one
-    // // of them satisfies the query.
-    // for (assignmentsTable_ty::iterator it = assignmentsTable.begin(), 
-    //        ie = assignmentsTable.end(); it != ie; ++it) {
-    //   Assignment *a = *it;
-    //   if (a->satisfies(key.begin(), key.end())) {
-    //     result = a;
-    //     llvm::outs() << "a satisfy\n";
-    //     return true;
-    //   }
-    // }
   } else {
     // FIXME: Which order? one is sure to be better.
 
@@ -283,22 +270,6 @@ bool CexCachingSolver::computeValidity(const Query& query,
     result = Solver::Error;
     return true;
   }
-  
-  // for (const auto &binding : a->bindings) {
-  //   const Array *array = binding.first;
-  //   const std::vector<unsigned char> &values = binding.second;
-
-  //   llvm::outs() << "Symbol: " << array->name << "\n";
-  //   llvm::outs() << "Values: [";
-  //   int k = values.size();
-  //   if(k>8) k=8;
-  //   for (size_t i = 0; i < k; ++i) {
-  //     llvm::outs() << static_cast<unsigned>(values[i]);
-  //     if (i + 1 < k)
-  //       llvm::outs() << ", ";
-  //   }
-  //   llvm::outs() << "]\n";
-  // }
 
   // integer overflow may make q incorrect
   if (!getAssignment(query, a)) {
@@ -311,34 +282,14 @@ bool CexCachingSolver::computeValidity(const Query& query,
   }
   if (a && b) {
     result = Solver::Unknown;
-    // llvm::outs() << "result: Solver::Unknown\n";
   } else if (a) {
     result = Solver::False;
-    // llvm::outs() << "result: Solver::False\n";
   } else if (b) {
     result = Solver::True;
-    // llvm::outs() << "result: Solver::True\n";
   } else {
-    // llvm::outs() << query.expr << "\n";
-    // klee_warning("query conflict\n");
     // may happen because integer overflow of intermediate computation
     result = Solver::Error;
   }
-  // ref<Expr> q = a->evaluate(query.expr);
-  // // llvm::outs() << query.expr << "\n";
-  // // llvm::outs() << "q: " << q << "\n";
-  // assert(isa<ConstantExpr>(q) && 
-  //        "assignment evaluation did not result in constant");
-
-  // if (cast<ConstantExpr>(q)->isTrue()) {
-  //   if (!getAssignment(query, a))
-  //     return false;
-  //   result = !a ? Solver::True : Solver::Unknown;
-  // } else {
-  //   if (!getAssignment(query.negateExpr(), a))
-  //     return false;
-  //   result = !a ? Solver::False : Solver::Unknown;
-  // }
   
   return true;
 }

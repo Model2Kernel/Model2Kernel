@@ -412,7 +412,6 @@ bool ExecutionState::merge(const ExecutionState &b) {
       if (!isa<ConstantExpr>(bv)) {
         needWriteWhole = true;
       }
-      // llvm::outs() << av << " " << bv << "\n";
     }
     if (needWriteWhole) {
       ref<Expr> av = wos->read(0, mo->size*8);

@@ -865,10 +865,6 @@ void SpecialFunctionHandler::handleMarkGlobal(ExecutionState &state,
 void SpecialFunctionHandler::handleCudaMalloc(ExecutionState &state,
                                               KInstruction *target,
                                               std::vector<ref<Expr>> &arguments) {
-    // klee_warning("Handling cudaMalloc");
-    // assert(arguments.size()==2 && "invalid number of arguments to cudaMalloc");
-    // llvm::outs() << "ptr: " << arguments[0] << "; size: " << arguments[1] << "\n";
-
     executor.executeAlloc(state, arguments[1], false, target, false, nullptr, 0, arguments[0]);
 }
 
@@ -877,10 +873,6 @@ void SpecialFunctionHandler::handleCudaMemcpy(ExecutionState &state,
                                               std::vector<ref<Expr>> &arguments) {
     // klee_warning("Handling cudaMemcpy");
     assert(arguments.size() == 4 && "Invalid number of arguments to cudaMemcpy");
-     
-    // for (size_t i = 0; i < arguments.size(); ++i) {
-    //     llvm::outs() << "Argument " << i << ": " << arguments[i] << "\n";
-    // }
 
     ref<Expr> dstPtrExpr = arguments[0];  // Destination pointer (symbolic)
     ref<Expr> srcPtrExpr = arguments[1];  // Source pointer (symbolic)
@@ -936,7 +928,6 @@ void SpecialFunctionHandler::handleCudaLaunchKernel(ExecutionState &state,
     if (it != executor.legalFunctions.end()) {
       Function *f = it->second;
       funcName = f->getName().str();
-      // llvm::outs() << funcName << "\n";
     } else {
       executor.terminateStateOnProgramError(state, "cudaLaunchKernel: no function found",
                                          StateTerminationType::ReportError);
@@ -999,7 +990,6 @@ void SpecialFunctionHandler::handleCudaLaunchKernel(ExecutionState &state,
                                          StateTerminationType::ReportError);
     return;     
   }
-  // llvm::outs() << realFunctionName << " kernel: " << kName << "\n";
 
   if (!kernelf) {
     executor.terminateStateOnProgramError(state, "cudaLaunchKernel: target function not found",
@@ -1014,7 +1004,6 @@ void SpecialFunctionHandler::handleCudaLaunchKernel(ExecutionState &state,
     argType->print(llvm::errs());
     llvm::errs() << "\n";
     ref<Expr> argExpr = argOS->read(i*8, Expr::Int64);
-    // llvm::outs() << i << ": " << argExpr << "\n";
 
     if (!attrList.hasParamAttr(i, llvm::Attribute::ByVal) && !argExpr.isNull()) {
       ObjectPair op1;
@@ -1033,7 +1022,6 @@ void SpecialFunctionHandler::handleCudaLaunchKernel(ExecutionState &state,
         }
       }
       argExpr = op1.second->read(0, op1.first->size*8);
-      // llvm::outs() << op1.first->size*8 << " argContent " << argExpr << "\n";
     }
     passedArguments.push_back(argExpr);
 
@@ -1049,8 +1037,6 @@ void SpecialFunctionHandler::handleCudaLaunchKernel(ExecutionState &state,
         }
       } else {
         if (!state.addressSpace.resolveOne(state, executor.solver.get(), argExpr, op1, success) || !success) {
-          // executor.terminateStateOnProgramError(state, "cudaLaunchKernel: do not find argument object", StateTerminationType::ReportError);
-          // return;
           continue;
         }
       }
@@ -1063,10 +1049,8 @@ void SpecialFunctionHandler::handleCudaLaunchKernel(ExecutionState &state,
           executor.terminateStateOnProgramError(state, "cudaLaunchKernel: do not find tensor object", StateTerminationType::ReportError);
           return;
         }
-        // llvm::outs() << op2.first->name << " " << dataAddress << "\n";
         op2.first->setMemType(MemoryObject::MemType::GLOBAL);
       }
-      // llvm::outs() << op1.first->name << "\n";
       op1.first->setMemType(MemoryObject::MemType::GLOBAL);
     }
   }
@@ -1079,11 +1063,6 @@ void SpecialFunctionHandler::handleCudaPopCallConfiguration(ExecutionState &stat
                                                     KInstruction *target,
                                                     std::vector<ref<Expr>> &arguments) {
     klee_warning("ignore __cudaPopCallConfiguration");
-
-    // for (size_t i = 0; i < arguments.size(); ++i) {
-    //     llvm::outs() << "Argument " << i << ": " << arguments[i] << "\n";
-    // }
-
     executor.bindLocal(target, state, ConstantExpr::create(0, Expr::Int32));
 }
 
@@ -1091,10 +1070,6 @@ void SpecialFunctionHandler::handleCudaPushCallConfiguration(ExecutionState &sta
                                                     KInstruction *target,
                                                     std::vector<ref<Expr>> &arguments) {
     // klee_warning("Handling __cudaPushCallConfiguration");
-
-    // for (size_t i = 0; i < arguments.size(); ++i) {
-    //   llvm::outs() << "Argument " << i << ": " << arguments[i] << "\n";
-    // }
 
     ref<Expr> gridExpr = arguments[0];
      // Split gridExpr (i64) into two 32-bit integers for grid.x and grid.y

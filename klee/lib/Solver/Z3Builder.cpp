@@ -483,7 +483,6 @@ Z3ASTHandle Z3Builder::getInitialIntArray(const Array *root, int elementWidth) {
 
     array_expr = buildIntArray(unique_name.c_str());
     unsigned byteWidth = elementWidth / 8;
-    // llvm::outs() << "name " << root->name << " id " << unique_id << " byteWidth " << byteWidth << "\n";
 
     if (root->isConstantArray() && constant_array_assertions.count(root) == 0) {
       std::vector<Z3ASTHandle> array_assertions;
@@ -493,15 +492,11 @@ Z3ASTHandle Z3Builder::getInitialIntArray(const Array *root, int elementWidth) {
         ref<ConstantExpr> full_value = ConstantExpr::create(0, elementWidth);
         for (unsigned j = 0; j < byteWidth; ++j) {
           ref<ConstantExpr> byte_value = root->constantValues[i * byteWidth + j];
-          // llvm::outs() << "i " << i << " j " << j << " offset " << i * byteWidth + j << " byte_value " << byte_value << "\n";
           full_value = full_value->Or(byte_value->ZExt(elementWidth)->Shl(ConstantExpr::create(j * 8, elementWidth)));
-          // llvm::outs() << "i " << i << " j " << j << " full_value " << full_value << "\n";
         }
 
-        // llvm::outs() << "i " << i << " full_value " << full_value << "\n";
         int width_out;
         Z3ASTHandle array_value = constructForInt(full_value, &width_out);
-        // assert(width_out == (int)elementWidth && "Constructed value does not match expected width");
     
         array_assertions.push_back(
             eqExpr(readExpr(array_expr, intConst32(i)), array_value));
@@ -715,13 +710,6 @@ Z3ASTHandle Z3Builder::constructForInt(ref<Expr> e, int *width_out, bool isBitVe
           res = Z3ASTHandle(Z3_mk_int2bv(ctx, e->getWidth(), res), ctx);
         }
       }
-      // llvm::outs() << "find " << e << " " << isBitVec << " ";
-      // if (res_kind == Z3_INT_SORT) 
-      //   llvm::outs() << "int sort\n";
-      // else if (res_kind == Z3_BV_SORT) 
-      //   llvm::outs() << "bv sort\n";
-      // else 
-      //   llvm::outs() << res_kind << "\n";
       return res;
     } else {
       int width;
@@ -743,13 +731,6 @@ Z3ASTHandle Z3Builder::constructForInt(ref<Expr> e, int *width_out, bool isBitVe
           res = Z3ASTHandle(Z3_mk_int2bv(ctx, e->getWidth(), res), ctx);
         }
       }
-      // llvm::outs() << "new " << e << " " << isBitVec << " ";
-      // if (res_kind == Z3_INT_SORT) 
-      //   llvm::outs() << "int sort\n";
-      // else if (res_kind == Z3_BV_SORT) 
-      //   llvm::outs() << "bv sort\n";
-      // else 
-      //   llvm::outs() << res_kind << "\n";
       constructed.insert(std::make_pair(e, std::make_pair(res, *width_out)));
       return res;
     }
@@ -757,7 +738,6 @@ Z3ASTHandle Z3Builder::constructForInt(ref<Expr> e, int *width_out, bool isBitVe
 }
 
 Z3ASTHandle Z3Builder::constructActualForInt(ref<Expr> e, int *width_out, bool isBitVec) {
-  // llvm::outs() << e << " isBitVec " << isBitVec << "\n";
   int width;
   if (!width_out)
     width_out = &width;
@@ -869,13 +849,11 @@ Z3ASTHandle Z3Builder::constructActualForInt(ref<Expr> e, int *width_out, bool i
     ReadExpr *re = cast<ReadExpr>(e);
     assert(re && re->updates.root);
     *width_out = re->updates.root->getRange();
-    // llvm::outs() << "constructForInt " << e << " name " << re->updates.root->name << " isBitVec " << isBitVec << " isIntVar " << re->updates.root->isIntVar << "\n";
     int index = 0;
     if (auto CE = dyn_cast<ConstantExpr>(re->index)) {
       index = CE->getZExtValue();
     } 
     if (!isBitVec && index == 0 && intArrNames.find(re->updates.root->name)!=intArrNames.end()) {
-      // llvm::outs() << intArrNames[re->updates.root->name] << " " << e->getWidth() << "\n";
       if (intArrNames[re->updates.root->name] * 8 == e->getWidth()) {
         Z3ASTHandle indexAST = uintConst32(0);  
         Z3ASTHandle readAST = readExpr(getInitialIntArray(re->updates.root, e->getWidth()), indexAST);
@@ -883,7 +861,6 @@ Z3ASTHandle Z3Builder::constructActualForInt(ref<Expr> e, int *width_out, bool i
       }
     }
     if (isBitVec || !re->updates.root->isIntVar || index > 0) {
-      // llvm::outs() << "constructForInt " << e << " isBitVec " << isBitVec << " isInt " << re->updates.root->isIntVar << "\n";
       Z3ASTHandle indexAST = constructForInt(re->index, 0, true);
       return readExpr(getArrayForUpdate(re->updates.root, re->updates.head.get(), true), indexAST);
     }
@@ -943,23 +920,10 @@ Z3ASTHandle Z3Builder::constructActualForInt(ref<Expr> e, int *width_out, bool i
     if (!isReadInt) {
       ref<ConstantExpr> lastConstExpr = ConcatExpr::getLastConstantInConcat(e, &array);
       if (lastConstExpr && !array->isConstantArray()) {
-        // Z3ASTHandle var = readIntExpr(array);
-        // ref<ConstantExpr> divideExpr = ConstantExpr::create(1ULL << lastConstExpr->getWidth(), ce->getWidth()); 
-        // ref<ConstantExpr> addend = ConstantExpr::create(lastConstExpr->getZExtValue(), ce->getWidth()); 
-        // Z3ASTHandle a = Z3ASTHandle(Z3_mk_div(ctx, var, constructForInt(divideExpr, 0, false)), ctx);
-        // Z3ASTHandle b = constructForInt(addend, 0, false);
-        // Z3_ast args[2] = {a, b};
-        // return Z3ASTHandle(Z3_mk_add(ctx, 2, args), ctx);
         return readIntExpr(array);
       }
 
-      // llvm::outs() << e << " isBitVec " << isBitVec << "\n";
       ref<Expr> indexExpr = ConcatExpr::getArrayIndex(e, &array);
-      // if (indexExpr)
-      //   llvm::outs() << "index: " << indexExpr << " " << array->name << "\n";
-      // for (auto p: intArrNames) {
-      //   llvm::outs() << p.first << " " << p.second << "\n";
-      // }
       if (indexExpr) {
         Z3ASTHandle tmpAST = constructForInt(indexExpr, 0);
         Z3_sort tmp_sort = Z3_get_sort(ctx, tmpAST);
@@ -970,7 +934,6 @@ Z3ASTHandle Z3Builder::constructActualForInt(ref<Expr> e, int *width_out, bool i
           if (intArrNames.find(array->name)!=intArrNames.end()) {
             int tmpWidth = intArrNames[array->name] * 8;
             if (tmpWidth > 8 && tmpWidth < elementWidth) {
-              // elementWidth = tmpWidth;
             }
             if (tmpWidth != elementWidth) {
               llvm::outs() << "Z3Builder: intArrNames[array->name] * 8 != e->getWidth() " << e << "\n";
@@ -978,27 +941,8 @@ Z3ASTHandle Z3Builder::constructActualForInt(ref<Expr> e, int *width_out, bool i
             }
           }
           Z3ASTHandle indexAST = Z3ASTHandle(Z3_mk_div(ctx, tmpAST, uintConst32(elementWidth/8)), ctx);  
-          // int elementWidth = intArrNames[array->name] * 8;
-          // if (elementWidth <= 8 || elementWidth > e->getWidth()) {
-          //   elementWidth = e->getWidth();
-          // }
           Z3ASTHandle readAST = readExpr(getInitialIntArray(array, ce->getWidth()), indexAST);
-          // ref<ReadExpr> re = dyn_cast<ReadExpr>(ce->getKid(0));
-          // Z3ASTHandle readAST = readExpr(getIntArrayForUpdate(array, re->updates.head.get(), ce->getWidth()), indexAST);
 
-          // if (intArrNames[array->name] * 8 != e->getWidth()) {
-          //   llvm::outs() << "Z3Builder: intArrNames[array->name] * 8 != e->getWidth() " << e << "\n";
-          //   llvm::outs() << array->name << " vsize " << intArrNames[array->name] << " width " << e->getWidth() << "\n";
-          // }
-
-          // if(!isa<ConstantExpr>(indexExpr)) {
-          //   Z3ASTHandle index_lowerBounds = Z3ASTHandle(Z3_mk_ge(ctx, indexAST, uintConst32(0)), ctx);
-          //   Z3ASTHandle index_upperBounds = Z3ASTHandle(Z3_mk_le(ctx, indexAST, maxValueAST), ctx);
-          //   int_array_bounds[array->name].push_back(index_lowerBounds);
-          //   int_array_bounds[array->name].push_back(index_upperBounds);
-          // }
-          
-          // if (!isHandlingQuery) {
           if (elementWidth <= 64) {
             ref<ConstantExpr> maxValueExpr = ConstantExpr::create((1ULL << (elementWidth-1)) - 1, elementWidth);
             Z3ASTHandle maxValueAST = constructForInt(maxValueExpr, 0);
@@ -1015,7 +959,6 @@ Z3ASTHandle Z3Builder::constructActualForInt(ref<Expr> e, int *width_out, bool i
     }
     
     if (isBitVec || !isReadInt) {
-      // llvm::outs() << "constructForInt " << e << " isBitVec " << isBitVec << " isReadInt " << isReadInt << "\n";
       Z3ASTHandle res = constructForInt(ce->getKid(numKids - 1), 0, true);
       for (int i = numKids - 2; i >= 0; i--) {
         res =
@@ -2134,7 +2077,6 @@ Z3ASTHandle Z3Builder::constructActual(ref<Expr> e, int *width_out) {
       Z3ASTHandle no_overflow_check = Z3ASTHandle(Z3_mk_bvadd_no_overflow(ctx, left, right, isSigned), ctx);
       if (std::find(int_array_bounds["bv"].begin(), int_array_bounds["bv"].end(), no_overflow_check) == int_array_bounds["bv"].end()){
           int_array_bounds["bv"].push_back(no_overflow_check);
-          // llvm::outs() << isSigned << " add builder " << ::Z3_ast_to_string(ctx, no_overflow_check) << "\n"; 
       }
     }
     assert(getBVLength(result) == static_cast<unsigned>(*width_out) &&
@@ -2148,14 +2090,6 @@ Z3ASTHandle Z3Builder::constructActual(ref<Expr> e, int *width_out) {
     Z3ASTHandle right = construct(se->right, width_out);
     assert(*width_out != 1 && "uncanonicalized sub");
     Z3ASTHandle result = Z3ASTHandle(Z3_mk_bvsub(ctx, left, right), ctx);
-    // if (!isHandlingQuery && std::find(noCheckExprs.begin(), noCheckExprs.end(), e) == noCheckExprs.end()) {
-    //   bool isSigned = se->isValueSigned();
-    //   Z3ASTHandle no_underflow_check = Z3ASTHandle(Z3_mk_bvsub_no_underflow(ctx, left, right, isSigned), ctx);
-    //   if (std::find(int_array_bounds["bv"].begin(), int_array_bounds["bv"].end(), no_underflow_check) == int_array_bounds["bv"].end()) {
-    //       int_array_bounds["bv"].push_back(no_underflow_check);
-    //       // llvm::outs() << isSigned << " sub builder " << ::Z3_ast_to_string(ctx, no_underflow_check) << "\n"; 
-    //   }
-    // }
     assert(getBVLength(result) == static_cast<unsigned>(*width_out) &&
            "width mismatch");
     return result;
@@ -2172,24 +2106,8 @@ Z3ASTHandle Z3Builder::constructActual(ref<Expr> e, int *width_out) {
       Z3ASTHandle no_overflow_check = Z3ASTHandle(Z3_mk_bvmul_no_overflow(ctx, left, right, isSigned), ctx);
       if (std::find(int_array_bounds["bv"].begin(), int_array_bounds["bv"].end(), no_overflow_check) == int_array_bounds["bv"].end()) {
           int_array_bounds["bv"].push_back(no_overflow_check);
-          // llvm::outs() << isSigned << " mul builder " << ::Z3_ast_to_string(ctx, no_overflow_check) << "\n"; 
       }
     }
-    // check overflow
-    // if (!(isa<ConstantExpr>(me->left)&&isa<ConstantExpr>(me->right))) {
-    //   // llvm::outs() << me->left << "   " << me->right << "\n";
-    //   // llvm::outs() << ::Z3_ast_to_string(ctx, left) << "  " <<  ::Z3_ast_to_string(ctx, right) << "\n";
-    //   unsigned n = me->left->getWidth(); 
-    //   Z3ASTHandle left_ext_ast = Z3ASTHandle(Z3_mk_concat(ctx, bvZero(n), left), ctx);
-    //   Z3ASTHandle right_ext_ast = Z3ASTHandle(Z3_mk_concat(ctx, bvZero(n), right), ctx);
-    //   // llvm::outs() << ::Z3_ast_to_string(ctx, left_ext_ast) << "  " <<  ::Z3_ast_to_string(ctx, right_ext_ast) << "\n";
-    //   Z3ASTHandle prod_ext_ast = Z3ASTHandle(Z3_mk_bvmul(ctx, left_ext_ast, right_ext_ast), ctx);
-    //   Z3ASTHandle high_bits = bvExtract(prod_ext_ast, n + n - 1, n);
-    //   Z3ASTHandle no_overflow_check = eqExpr(high_bits, construct(ConstantExpr::create(0, n)));
-    //   // llvm::outs() << ::Z3_ast_to_string(ctx, no_overflow_check) << "\n";
-    //   if (std::find(int_array_bounds["bv"].begin(), int_array_bounds["bv"].end(), no_overflow_check) == int_array_bounds["bv"].end())
-    //     int_array_bounds["bv"].push_back(no_overflow_check);
-    // }
 
     assert(getBVLength(result) == static_cast<unsigned>(*width_out) &&
            "width mismatch");

@@ -38,8 +38,8 @@ def compile_cu_file(cu_file, depPath):
 
     clang_command = [
         "clang++-13",
-        "-g",
-        "-O0",
+        # "-g", # cause broken module
+        # "-O0",
         # "-disable-O0-optnone",
         "-x", "cuda", 
         "--cuda-gpu-arch=sm_80",  
@@ -137,16 +137,16 @@ def link_combine(dir):
             print(f"Error: Missing {host_bc_file} or {cuda_bc_file} file. Skipping combination.")
 
 def compileDir(outputDir, inputDir):
+    print("Compiling CUDA files...")
+    cu_files = list(Path(inputDir).resolve().rglob("*.cu"))
+    if not cu_files:
+        print("No .cu files found in the source directory.")
+        sys.exit(1)
+    
     # Create output directory
     os.makedirs(outputDir, exist_ok=True)
     original_dir = os.getcwd()
     os.chdir(outputDir)
-
-    print("Compiling CUDA files...")
-    cu_files = list(Path(inputDir).rglob("*.cu"))
-    if not cu_files:
-        print("No .cu files found in the source directory.")
-        sys.exit(1)
     
     failed_files = []
 

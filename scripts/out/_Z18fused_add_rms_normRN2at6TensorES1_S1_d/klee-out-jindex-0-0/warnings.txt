@@ -1,0 +1,84 @@
+KLEE: WARNING: --use-merge enabled. Using NURS_CovNew as default searcher.
+KLEE: WARNING ONCE: unsupported intrinsic llvm.nvvm.read.ptx.sreg.tid.x
+KLEE: WARNING ONCE: unsupported intrinsic llvm.nvvm.read.ptx.sreg.ctaid.x
+KLEE: WARNING ONCE: unsupported intrinsic llvm.nvvm.read.ptx.sreg.ntid.x
+KLEE: WARNING ONCE: unsupported intrinsic llvm.nvvm.read.ptx.sreg.tid.z
+KLEE: WARNING ONCE: unsupported intrinsic llvm.nvvm.read.ptx.sreg.tid.y
+KLEE: WARNING ONCE: unsupported intrinsic llvm.nvvm.barrier0
+KLEE: WARNING ONCE: unsupported intrinsic llvm.nvvm.rsqrt.approx.f
+KLEE: WARNING: undefined reference to variable: _ZN3c1019UndefinedTensorImpl10_singletonE
+KLEE: WARNING: undefined reference to function: _ZN3c1021throwNullDataPtrErrorEv
+KLEE: WARNING: undefined reference to function: _ZN3c1021warnDeprecatedDataPtrEv
+KLEE: WARNING: undefined reference to function: _ZN3c104cuda12device_countEv
+KLEE: WARNING: undefined reference to function: _ZN3c104cuda14ExchangeDeviceEa
+KLEE: WARNING: undefined reference to function: _ZN3c104cuda14MaybeSetDeviceEa
+KLEE: WARNING: undefined reference to function: _ZN3c104cuda17getStreamFromPoolEba
+KLEE: WARNING: undefined reference to function: _ZN3c104cuda17getStreamFromPoolEia
+KLEE: WARNING: undefined reference to variable: _ZN3c104cuda20CUDACachingAllocator9allocatorE
+KLEE: WARNING: undefined reference to function: _ZN3c104cuda20getCurrentCUDAStreamEa
+KLEE: WARNING: undefined reference to function: _ZN3c104cuda20getDefaultCUDAStreamEa
+KLEE: WARNING: undefined reference to function: _ZN3c104cuda20setCurrentCUDAStreamENS0_10CUDAStreamE
+KLEE: WARNING: undefined reference to function: _ZN3c104cuda21warn_or_error_on_syncEv
+KLEE: WARNING: undefined reference to function: _ZN3c104cuda29c10_cuda_check_implementationEiPKcS2_ib
+KLEE: WARNING: undefined reference to function: _ZN3c104cuda9GetDeviceEPa
+KLEE: WARNING: undefined reference to function: _ZN3c104cuda9SetDeviceEa
+KLEE: WARNING: undefined reference to variable: _ZN3c104impl26device_guard_impl_registryE
+KLEE: WARNING: undefined reference to function: _ZN3c104impl3cow15is_cow_data_ptrERKNS_7DataPtrE
+KLEE: WARNING: undefined reference to function: _ZN3c104impl3cow23materialize_cow_storageERNS_11StorageImplE
+KLEE: WARNING: undefined reference to variable: _ZN3c104impl8GPUTrace13gpuTraceStateE
+KLEE: WARNING: undefined reference to variable: _ZN3c104impl8GPUTrace9haveStateE
+KLEE: WARNING: undefined reference to function: _ZN3c104warnERKNS_7WarningE
+KLEE: WARNING: undefined reference to function: _ZN3c106detail14torchCheckFailEPKcS2_jRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
+KLEE: WARNING: undefined reference to function: _ZN3c106detail14torchCheckFailEPKcS2_jS2_
+KLEE: WARNING: undefined reference to function: _ZN3c106detail19maybe_wrap_dim_slowIlEET_S2_S2_b
+KLEE: WARNING: undefined reference to function: _ZN3c106detail23torchInternalAssertFailEPKcS2_jS2_RKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
+KLEE: WARNING: undefined reference to function: _ZN3c107WarningC1ESt7variantIJNS0_11UserWarningENS0_18DeprecationWarningEEERKNS_14SourceLocationENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEb
+KLEE: WARNING: undefined reference to function: _ZN3c10lsERSoNS_10DeviceTypeE
+KLEE: WARNING: undefined reference to function: _ZN6caffe28TypeMeta13typeMetaDatasEv
+KLEE: WARNING: undefined reference to function: _ZN6caffe28TypeMeta26error_unsupported_typemetaES0_
+KLEE: WARNING: undefined reference to function: _ZNK2at10TensorBase8data_ptrIN3c104HalfEEEPT_v
+KLEE: WARNING: undefined reference to function: _ZNK2at10TensorBase8data_ptrIN3c108BFloat16EEEPT_v
+KLEE: WARNING: undefined reference to function: _ZNK2at10TensorBase8data_ptrIfEEPT_v
+KLEE: WARNING: undefined reference to function: _ZNK3c1010TensorImpl27throw_data_ptr_access_errorEv
+KLEE: WARNING: undefined reference to function: _ZNK3c1017SymbolicShapeMeta18init_is_contiguousEv
+KLEE: WARNING: undefined reference to function: _ZNK3c1017SymbolicShapeMeta32init_is_channels_last_contiguousEv
+KLEE: WARNING: undefined reference to function: _ZNK3c1017SymbolicShapeMeta35init_is_channels_last_3d_contiguousEv
+KLEE: WARNING: undefined reference to function: _ZNK3c104cuda10CUDAStream6streamEv
+KLEE: WARNING: undefined reference to function: _ZNK3c107SymBool10guard_boolEPKcl
+KLEE: WARNING: undefined reference to function: _ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv
+KLEE: WARNING: undefined reference to function: _ZNSolsEi
+KLEE: WARNING: undefined reference to function: _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED1Ev
+KLEE: WARNING: undefined reference to function: _ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEC1Ev
+KLEE: WARNING: undefined reference to function: _ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev
+KLEE: WARNING: undefined reference to function: _ZNSt8ios_base4InitC1Ev
+KLEE: WARNING: undefined reference to function: _ZNSt8ios_base4InitD1Ev
+KLEE: WARNING: undefined reference to function: _ZNSt9exceptionD2Ev
+KLEE: WARNING: undefined reference to function: _ZSt9terminatev
+KLEE: WARNING: undefined reference to function: _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc
+KLEE: WARNING: undefined reference to function: _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_a
+KLEE: WARNING: undefined reference to function: _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c
+KLEE: WARNING: undefined reference to function: _ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE
+KLEE: WARNING: undefined reference to variable: _ZTISt9exception
+KLEE: WARNING: undefined reference to variable: _ZTVSt9exception
+KLEE: WARNING: undefined reference to function: __cxa_allocate_exception
+KLEE: WARNING: undefined reference to function: __cxa_atexit
+KLEE: WARNING: undefined reference to function: __cxa_begin_catch
+KLEE: WARNING: undefined reference to function: __cxa_pure_virtual
+KLEE: WARNING: undefined reference to function: __cxa_throw
+KLEE: WARNING: undefined reference to function: __gxx_personality_v0
+KLEE: WARNING: undefined reference to function: cudaEventCreateWithFlags
+KLEE: WARNING: undefined reference to function: cudaEventDestroy
+KLEE: WARNING: undefined reference to function: cudaEventElapsedTime
+KLEE: WARNING: undefined reference to function: cudaEventQuery
+KLEE: WARNING: undefined reference to function: cudaEventRecord
+KLEE: WARNING: undefined reference to function: cudaEventSynchronize
+KLEE: WARNING: undefined reference to function: cudaGetErrorString
+KLEE: WARNING: undefined reference to function: cudaGetLastError
+KLEE: WARNING: undefined reference to function: cudaStreamQuery
+KLEE: WARNING: undefined reference to function: cudaStreamSynchronize
+KLEE: WARNING: undefined reference to function: cudaStreamWaitEvent
+KLEE: WARNING ONCE: calling external: _ZNSt8ios_base4InitC1Ev(140462090948608) at [no debug info]
+KLEE: WARNING ONCE: calling external: __cxa_atexit(140452225945600, 140462090948608, 140463298908160) at [no debug info]
+KLEE: WARNING: ignore __cudaPopCallConfiguration
+KLEE: WARNING: handle cudaLaunchKernel
+KLEE: WARNING ONCE: Symbolic memory access will send the following array of 39973 bytes to the constraint solver -- large symbolic arrays may cause significant performance issues: MO1[39973] allocated at _Z18fused_add_rms_normRN2at6TensorES1_S1_d():  call void @klee.ctor_stub()

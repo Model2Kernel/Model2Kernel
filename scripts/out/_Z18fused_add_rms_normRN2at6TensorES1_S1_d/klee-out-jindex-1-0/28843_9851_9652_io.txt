@@ -1,0 +1,166 @@
+; start Z3 query
+; Emited by klee::Z3SolverImpl::getConstraintLog()
+(set-info :status unknown)
+(declare-fun |_arg_0.size[0]| () Int)
+(declare-fun |_arg_1.size[0]| () Int)
+(declare-fun batch_size () Int)
+(declare-fun seq_len () Int)
+(declare-fun blockIdx.x0 () Int)
+(declare-fun blockIdx.y0 () Int)
+(declare-fun blockIdx.z0 () Int)
+(declare-fun threadIdx.x0 () Int)
+(declare-fun threadIdx.y0 () Int)
+(declare-fun threadIdx.z0 () Int)
+(declare-fun loop_index_9 () Int)
+(assert
+ (<= 0 |_arg_0.size[0]|))
+(assert
+ (<= |_arg_0.size[0]| 2147483647))
+(assert
+ (<= 1 |_arg_0.size[0]|))
+(assert
+ (let ((?x13 (* 7168 |_arg_0.size[0]|)))
+ (<= ?x13 9223372036854775807)))
+(assert
+ (<= 0 |_arg_1.size[0]|))
+(assert
+ (<= |_arg_1.size[0]| 2147483647))
+(assert
+ (<= 1 |_arg_1.size[0]|))
+(assert
+ (let ((?x22 (* 7168 |_arg_1.size[0]|)))
+ (<= ?x22 9223372036854775807)))
+(assert
+ (<= 0 batch_size))
+(assert
+ (<= batch_size 2147483647))
+(assert
+ (<= 1 batch_size))
+(assert
+ (<= batch_size 1000))
+(assert
+ (<= 0 seq_len))
+(assert
+ (<= seq_len 2147483647))
+(assert
+ (<= 1 seq_len))
+(assert
+ (<= seq_len 2000000))
+(assert
+ (let ((?x37 (* batch_size seq_len)))
+ (<= ?x37 9000000)))
+(assert
+ (let ((?x37 (* batch_size seq_len)))
+ (= |_arg_0.size[0]| ?x37)))
+(assert
+ (let ((?x37 (* batch_size seq_len)))
+ (= |_arg_1.size[0]| ?x37)))
+(assert
+ (let ((?x13 (* 7168 |_arg_0.size[0]|)))
+ (let ((?x44 (div ?x13 7168)))
+ (<= 0 ?x44))))
+(assert
+ (let ((?x13 (* 7168 |_arg_0.size[0]|)))
+ (let ((?x44 (div ?x13 7168)))
+ (<= ?x44 2147483647))))
+(assert
+ (let ((?x13 (* 7168 |_arg_0.size[0]|)))
+ (let ((?x44 (div ?x13 7168)))
+ (let (($x48 (< ?x44 256)))
+ (let ((?x50 (ite $x48 1024 256)))
+ (<= 0 ?x50))))))
+(assert
+ (let ((?x13 (* 7168 |_arg_0.size[0]|)))
+ (let ((?x44 (div ?x13 7168)))
+ (let (($x48 (< ?x44 256)))
+ (let ((?x50 (ite $x48 1024 256)))
+ (<= ?x50 1024))))))
+(assert
+ (<= 0 blockIdx.x0))
+(assert
+ (let ((?x13 (* 7168 |_arg_0.size[0]|)))
+ (let ((?x44 (div ?x13 7168)))
+ (< blockIdx.x0 ?x44))))
+(assert
+ (<= 0 blockIdx.y0))
+(assert
+ (< blockIdx.y0 1))
+(assert
+ (<= 0 blockIdx.z0))
+(assert
+ (< blockIdx.z0 1))
+(assert
+ (<= 0 threadIdx.x0))
+(assert
+ (let ((?x13 (* 7168 |_arg_0.size[0]|)))
+ (let ((?x44 (div ?x13 7168)))
+ (let (($x48 (< ?x44 256)))
+ (let ((?x50 (ite $x48 1024 256)))
+ (< threadIdx.x0 ?x50))))))
+(assert
+ (<= 0 threadIdx.y0))
+(assert
+ (< threadIdx.y0 1))
+(assert
+ (<= 0 threadIdx.z0))
+(assert
+ (< threadIdx.z0 1))
+(assert
+ (<= (- 2147483648) loop_index_9))
+(assert
+ (<= loop_index_9 2147483647))
+(assert
+ (<= threadIdx.x0 loop_index_9))
+(assert
+ (< loop_index_9 896))
+(assert
+ (let ((?x13 (* 7168 |_arg_0.size[0]|)))
+ (let ((?x44 (div ?x13 7168)))
+ (let (($x48 (< ?x44 256)))
+ (let ((?x50 (ite $x48 1024 256)))
+ (let ((?x78 (- loop_index_9 threadIdx.x0)))
+ (let ((?x79 (rem ?x78 ?x50)))
+ (= 0 ?x79))))))))
+(assert
+ (let ((?x81 (* 896 blockIdx.x0)))
+ (<= ?x81 2147483647)))
+(assert
+ (let ((?x81 (* 896 blockIdx.x0)))
+ (let ((?x85 (+ ?x81 loop_index_9)))
+ (let (($x87 (<= ?x85 2147483647)))
+ (= false $x87)))))
+(assert
+ (let ((?x81 (* 896 blockIdx.x0)))
+ (let ((?x85 (+ ?x81 loop_index_9)))
+ (<= ?x85 9223372036854775807))))
+(assert
+ (let ((?x13 (* 7168 |_arg_0.size[0]|)))
+ (>= ?x13 (- 9223372036854775808))))
+(assert
+ (let ((?x13 (* 7168 |_arg_0.size[0]|)))
+ (<= ?x13 9223372036854775807)))
+(assert
+ (let ((?x22 (* 7168 |_arg_1.size[0]|)))
+ (>= ?x22 (- 9223372036854775808))))
+(assert
+ (let ((?x22 (* 7168 |_arg_1.size[0]|)))
+ (<= ?x22 9223372036854775807)))
+(assert
+ (let ((?x37 (* batch_size seq_len)))
+ (>= ?x37 (- 9223372036854775808))))
+(assert
+ (let ((?x37 (* batch_size seq_len)))
+ (<= ?x37 9223372036854775807)))
+(assert
+ (let ((?x81 (* 896 blockIdx.x0)))
+ (>= ?x81 (- 9223372036854775808))))
+(assert
+ (let ((?x81 (* 896 blockIdx.x0)))
+ (<= ?x81 9223372036854775807)))
+(assert
+ (not false))
+(check-sat)
+(get-model)
+(reset)
+; end Z3 query
+

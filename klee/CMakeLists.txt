@@ -11,9 +11,7 @@
 # Minimum CMake version and policies
 ###############################################################################
 cmake_minimum_required(VERSION 3.16.0)
-if(NOT PROJECT_NAME)
-  project(KLEE CXX C)
-endif()
+project(KLEE CXX C)
 
 ###############################################################################
 # Project version

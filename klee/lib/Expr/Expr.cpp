@@ -91,20 +91,6 @@ ref<Expr> Expr::createTempRead(const Array *array, Expr::Width w) {
   }
 }
 
-// ref<Expr> Expr::createIntTempRead(const Array *array, Expr::Width w) {
-//   array->isIntVar = true;
-//   ref<Expr> res = createTempRead(array, w);
-//   if (auto readExpr = dyn_cast<ReadExpr>(res)) {
-//     readExpr->isReadInt = true;
-//     return readExpr;
-//   }
-//   if (auto concatExpr = dyn_cast<ConcatExpr>(res)) {
-//     concatExpr->isReadInt = true;
-//     return concatExpr;
-//   }
-//   return res;
-// }
-
 bool ConcatExpr::checkIsReadInt(ref<Expr> e, const Array **array) {
   if (auto concatExpr = dyn_cast<ConcatExpr>(e)) {
     return checkIsReadInt(concatExpr->left, array) && checkIsReadInt(concatExpr->right, array);
@@ -123,7 +109,6 @@ bool ConcatExpr::checkIsReadInt(ref<Expr> e, const Array **array) {
 }
 
 ref<Expr> ConcatExpr::getArrayIndex(ref<Expr> e, const Array **array) {
-  // llvm::outs() << e << "\n";
   if (auto concatExpr = dyn_cast<ConcatExpr>(e)) {
     if (auto readExpr = dyn_cast<ReadExpr>(concatExpr->left)) {
       if (!*array) {
@@ -148,17 +133,6 @@ ref<Expr> ConcatExpr::getArrayIndex(ref<Expr> e, const Array **array) {
       if (isa<ConcatExpr>(concatExpr->left))
         return getArrayIndex(concatExpr->left, array);
     }
-
-  //   if (isa<ConcatExpr>(concatExpr->left)) {
-  //     if (auto readExpr = dyn_cast<ReadExpr>(concatExpr->right)) {
-  //       if (!*array) {
-  //         *array = readExpr->updates.root;
-  //       } else if (readExpr->updates.root->name != (*array)->name) {
-  //         return nullptr;
-  //       }
-  //       return getArrayIndex(concatExpr->left, array);
-  //     }
-  //   }
   }
   return nullptr;
 }
@@ -200,7 +174,6 @@ ref<ReadExpr> ReadExpr::extractReadExpr(ref<Expr> expr) {
   }
 
   if (auto concatExpr = dyn_cast<ConcatExpr>(expr)) {
-    // llvm::outs() << "concat num " << concatExpr->getNumKids() << " operand0 " << concatExpr->getKid(0) << "\n";
     return extractReadExpr(concatExpr->getKid(0));
   }
 
@@ -254,7 +227,6 @@ ref<Expr> Expr::andExprUsingArithmetic(ref<Expr> a, ref<Expr> b) {
     
     result = AddExpr::create(result, shift_result);  // Accumulate the result
   }
-  // llvm::outs() << "andExprUsingArithmetic res " << result << "\n";
   return result;
 }
 
@@ -392,25 +364,10 @@ void Expr::findAllConcatExpr(const ref<Expr> &e,
 
 ref<ConstantExpr> Expr::getBaseAddress(const ref<Expr> e) {
   if (auto ce = dyn_cast<ConstantExpr>(e)) {
-    // uint64_t v = ce->getZExtValue();
-
-    // Typical KLEE addresses (MemoryObject bases) are large, e.g. >= 0x10000000.
-    // Offsets are usually small (< 64k).
-    // if (v >= 0x10000000ULL) {
-    //     return ce;
-    // }
     return ce;
-    // return nullptr;
   }
   if (e->getNumKids() >= 1)
     return getBaseAddress(e->getKid(0));
-
-  // for (unsigned i = 0; i < e->getNumKids(); i++) {
-  //   ref<Expr> tmp = getBaseAddress(e->getKid(i));
-  //   if (!tmp.isNull()) {
-  //     return tmp;
-  //   }
-  // }
 
   return nullptr;
 }
@@ -427,26 +384,6 @@ ref<SelectExpr> SelectExpr::findSelect(ref<Expr> e) {
   }
   return nullptr;
 }
-
-// bool Expr::containsExpr(const ref<Expr> &A, const ref<Expr> &B) {
-//   if (A == B) {
-//     return true;
-//   }
-
-//   // If it's a constant, nothing to check further
-//   if (A->getNumKids() == 0) {
-//     return false;
-//   }
-
-//   // Recurse over children
-//   for (unsigned i = 0; i < A->getNumKids(); ++i) {
-//     if (containsExpr(A->getKid(i), B)) {
-//       return true;
-//     }
-//   }
-
-//   return false;
-// }
 
 float ConstantExpr::getFloatFromConstantExpr(ref<Expr> expr) {
   assert(isa<ConstantExpr>(expr));

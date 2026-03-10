@@ -521,7 +521,7 @@ void runKLEECommand(const std::string &functionName, const std::string &function
 }
 
 int main(int argc, char **argv) {
-    cl::ParseCommandLineOptions(argc, argv, "CUDAAnalyzer\n");
+    cl::ParseCommandLineOptions(argc, argv, "Model2Kernel\n");
     
     if (argc < 2) {
         std::cerr << "Usage: " << argv[0] << " <inputFilePath>\n";
@@ -600,7 +600,6 @@ int main(int argc, char **argv) {
                             }
                             
                             if (demangledFuncName == function) {
-                                // llvm::outs() << mangledName << " " << demangledFuncName << "\n";
                                 targetFunctionName = mangledName;
                                 break;
                             }
