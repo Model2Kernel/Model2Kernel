@@ -27,17 +27,26 @@ Model2Kernel/
 ## Quick Start
 #### Prerequisites Setup
 ```bash
+# install cuda 
+# https://developer.nvidia.com/cuda-12-1-0-download-archive
+# ubuntu20.04 instructions:
+$ wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.0-1_all.deb
+$ sudo dpkg -i cuda-keyring_1.0-1_all.deb
+$ sudo apt-get update
+$ sudo apt-get -y install cuda
+
+# install klee dependencies
 $ sudo apt update
 $ sudo apt-get -y install build-essential cmake curl file g++-multilib gcc-multilib git libcap-dev libgoogle-perftools-dev libncurses-dev libsqlite3-dev libtcmalloc-minimal4 python3-pip unzip graphviz doxygen
 $ sudo apt install -y python3.12
 $ sudo pip3 install lit wllvm
 $ sudo apt-get install -y python3-tabulate 
 
-# install Git
-$ sudo apt install -y git 
-
 # install z3
 $ sudo apt install -y z3
+
+# install Git
+$ sudo apt install -y git 
 
 # install docker (optional)
 $ sudo apt install -y ca-certificates curl
